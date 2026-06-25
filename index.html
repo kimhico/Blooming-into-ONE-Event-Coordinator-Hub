@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Coordinator Hub</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* 🔽 PASTE THE URL TO YOUR PREMADE BACKGROUND IMAGE HERE 🔽 */
+      --bg-image: url('background-checklist.gif');
+      --primary-gold: #fe78f3;
+      --primary-gold-dark: #b32e8f;
+      --text-dark: #333333;
+      --text-light: #666666;
+      --accent-pink: #fbc2eb;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg-image) no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 10px;
+      min-height: 100vh;
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Transparent Wrapper (No Card / No Background Frame) */
+    .app-container {
+      width: 100%;
+      max-width: 450px;
+      margin: 20px auto;
+      padding: 20px 15px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* Header Branding Area */
+    .branding-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .branding-header .sub-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--text-light);
+      margin: 0 0 5px 0;
+      font-weight: 500;
+    }
+    .branding-header h1 {
+      font-size: 2rem;
+      color: var(--text-dark);
+      margin: 0;
+      line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+    .branding-header h1 span {
+      display: block;
+      font-size: 2.6rem;
+      color: var(--primary-gold-dark);
+      letter-spacing: 2px;
+      font-weight: 500;
+    }
+
+    /* Utilities & Navigation Links */
+    .hidden { display: none !important; }
+
+    .back-link {
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Menu Selection items */
+    .menu-space {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .menu-card {
+      background: rgba(255, 255, 255, 0.85); /* Semitransparent glass element */
+      border: 1px solid rgba(171, 164, 164, 0.45);
+      padding: 22px;
+      text-align: center;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 1.5px;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(65, 64, 64, 0.03);
+      backdrop-filter: blur(4px);
+      transition: all 0.2s ease;
+    }
+    .menu-card:hover {
+      background: rgba(247, 205, 241, 0.95);
+      border-color: var(--primary-gold);
+      transform: translateY(-2px);
+    }
+
+    /* Accordion Structures */
+    .accordion-item {
+      background: rgba(250, 254, 191, 0.85);
+      border: 1px solid rgba(180, 179, 179, 0.5);
+      border-radius: 18px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+    .accordion-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 18px 20px;
+      text-align: left;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .accordion-trigger:hover { background: rgba(255, 111, 0, 0.4); }
+    .accordion-content {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Meta Display Data info layout */
+    .meta-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+    .meta-item-row {
+      display: flex;
+      justify-content: flex-start;
+      align-items: baseline;
+      gap: 6px;
+      line-height: 1.4;
+    }
+    .meta-grid strong { 
+      color: var(--text-dark); 
+      font-weight: 700; 
+      font-size: 0.9rem; 
+      white-space: nowrap;
+    }
+    .meta-grid span, .meta-grid a {
+      color: var(--text-light);
+      font-weight: 200;
+    }
+    .meta-grid a { 
+      color: var(--primary-gold-dark); 
+      text-decoration: underline; 
+      font-weight: 200; 
+    }
+    
+    /* Inline Image Preview Styling */
+    .receipt-preview-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-top: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.05);
+      display: block;
+    }
+
+    /* Input items elements */
+    label.checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      margin: 15px 0;
+      font-weight: 500;
+    }
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary-gold-dark);
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      height: 45px;
+      padding: 10px;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.6);
+      resize: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      box-sizing: border-box;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary-gold-dark);
+      background: #ffffff;
+    }
+
+    /* Checklist sub-items rows */
+    .task-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 12px 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.1);
+    }
+    .task-row:last-child { border-bottom: none; }
+    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; }
+
+    /* Loading state design */
+    .loading-container {
+      text-align: center;
+      padding: 40px 0;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(0,0,0,0.05);
+      border-top: 3px solid var(--primary-gold-dark);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px auto;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  
+  <div class="branding-header">
+    <h1>EVENT COORDINATOR<span>HUB</span></h1>
+  </div>
+
+  <div id="loading" class="loading-container">
+    <div class="spinner"></div>
+    <span style="font-size: 0.85rem; color: var(--text-light); letter-spacing: 1px; font-weight: 500;">Searching list...</span>
+  </div>
+
+  <div id="view-home" class="hidden">
+    <div class="menu-space">
+      <div class="menu-card" onclick="switchView('view-suppliers')">Supplier Profiles</div>
+      <div class="menu-card" onclick="switchView('view-checklist')">Overall Checklist</div>
+    </div>
+  </div>
+
+  <div id="view-suppliers" class="hidden">
+    <a class="back-link" onclick="switchView('view-home')">← Back to Search Menu</a>
+    <div id="suppliers-container"></div>
+  </div>
+
+  <div id="view-checklist" class="hidden">
+    <a class="back-link" onclick="switchView('view-home')">← Back to Search Menu</a>
+    <div id="checklist-container"></div>
+  </div>
+
+</div>
+
+<script>
+  // 🔽 PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL HERE 🔽
+  const API_URL = "https://script.google.com/macros/s/AKfycby6gaZQWctKLZPMlcKMU9TEZw6vIZHcP6uBihkZxrH0n5wkfHT7jSdbvXXrvAsSaHVd/exec";
+
+  let dbStore = { suppliers: [], checklist: [] };
+  let debounceTimers = {};
+
+  window.onload = function() {
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        dbStore = data;
+        document.getElementById('loading').classList.add('hidden');
+        renderSuppliers();
+        renderChecklist();
+        switchView('view-home');
+      })
+      .catch(err => {
+        document.getElementById('loading').innerText = "Failed to sync database.";
+        console.error(err);
+      });
+  };
+
+  function switchView(viewId) {
+    ['view-home', 'view-suppliers', 'view-checklist'].forEach(id => document.getElementById(id).classList.add('hidden'));
+    document.getElementById(viewId).classList.remove('hidden');
+  }
+
+  // Hide/Unhide Function for Main Elements
+  function toggleAccordion(id) {
+    const el = document.getElementById(id);
+    el.classList.contains('hidden') ? el.classList.remove('hidden') : el.classList.add('hidden');
+  }
+
+  function renderSuppliers() {
+    const container = document.getElementById('suppliers-container');
+    container.innerHTML = '';
+    dbStore.suppliers.forEach(sup => {
+      const panelId = `sup-panel-${sup.rowId}`;
+      container.innerHTML += `
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion('${panelId}')">
+            <span>${sup.name}</span>
+            <span style="font-size:0.75rem; color:var(--primary-gold-dark);">▼</span>
+          </button>
+          <div id="${panelId}" class="accordion-content hidden">
+            <div class="meta-grid">
+              <div class="meta-item-row"><strong>Item Supplied:</strong> <span>${sup.item}</span></div>
+              <div class="meta-item-row"><strong>Facebook Profile:</strong> <a href="${sup.fbLink}" target="_blank">${sup.name}</a></div>
+              <div class="meta-item-row"><strong>Downpayment Given:</strong> <span>${sup.downpayment}</span></div>
+              <div class="meta-item-row"><strong>Remaining Balance:</strong> <span>${sup.balance}</span></div>
+              <div style="margin-top: 5px;">
+                <strong>Receipt Record:</strong>
+                ${sup.receipt ? `<img src="${sup.receipt}" class="receipt-preview-img" alt="Receipt Image Preview" onerror="this.style.display='none';">` : '<span style="color:var(--text-light); font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>'}
+              </div>
+            </div>
+            <label class="checkbox-container">
+              <input type="checkbox" ${sup.isPaid ? 'checked' : ''} onchange="sendUpdate('supplier', ${sup.rowId}, 'isPaid', this.checked)">
+              Remaining balance cleared
+            </label>
+            <textarea placeholder="Add supplier remarks..." oninput="debounceSave('supplier', ${sup.rowId}, 'remarks', this.value)">${sup.remarks}</textarea>
+          </div>
+        </div>`;
+    });
+  }
+
+  function renderChecklist() {
+    const container = document.getElementById('checklist-container');
+    container.innerHTML = '';
+    const grouped = {};
+    dbStore.checklist.forEach(item => {
+      if (!grouped[item.category]) grouped[item.category] = [];
+      grouped[item.category].push(item);
+    });
+
+    let catIndex = 0;
+    for (const catName in grouped) {
+      catIndex++;
+      const panelId = `cat-panel-${catIndex}`;
+      let blockHtml = `
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion('${panelId}')">
+            <span>${catName}</span>
+            <span style="font-size:0.75rem; color:var(--primary-gold-dark);">▼</span>
+          </button>
+          <div id="${panelId}" class="accordion-content hidden">`;
+      
+      grouped[catName].forEach(task => {
+        blockHtml += `
+          <div class="task-row">
+            <div class="task-main-info">
+              <input type="checkbox" ${task.isDone ? 'checked' : ''} onchange="sendUpdate('checklist', ${task.rowId}, 'isDone', this.checked)">
+              <span>${task.item}</span>
+            </div>
+            <textarea placeholder="Add remarks..." oninput="debounceSave('checklist', ${task.rowId}, 'remarks', this.value)">${task.remarks}</textarea>
+          </div>`;
+      });
+      blockHtml += `</div></div>`;
+      container.innerHTML += blockHtml;
+    }
+  }
+
+  function sendUpdate(type, rowId, col, val) {
+    fetch(API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type, rowId, col, val })
+    });
+  }
+
+  function debounceSave(type, rowId, col, val) {
+    const timerId = `${type}-${rowId}-${col}`;
+    clearTimeout(debounceTimers[timerId]);
+    debounceTimers[timerId] = setTimeout(() => {
+      sendUpdate(type, rowId, col, val);
+    }, 600);
+  }
+</script>
+</body>
+</html>
