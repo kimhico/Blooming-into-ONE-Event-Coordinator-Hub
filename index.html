@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event Coordinator Hub</title>
+  <title>Blooming into ONE - Event Coordinator Hub</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,8 +11,10 @@
 
   <style>
     :root {
-      /* 🔽 PASTE THE URL TO YOUR PREMADE BACKGROUND IMAGE HERE 🔽 */
-      --bg-image: url('background-checklist.gif');
+      /* 🔽 BACKGROUND IMAGE CONFIGURATION 🔽 */
+      --bg-desktop: url('background-checklist.gif');
+      --bg-mobile: url('background-checklist-mobile.gif');
+      
       --primary-gold: #fe78f3;
       --primary-gold-dark: #b32e8f;
       --text-dark: #333333;
@@ -22,7 +24,8 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background: var(--bg-image) no-repeat center center fixed;
+      /* Defaulting to Mobile Background */
+      background: var(--bg-mobile) no-repeat center center fixed;
       background-size: cover;
       margin: 0;
       padding: 10px;
@@ -31,6 +34,13 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
+    }
+
+    /* 🖥️ DESKTOP MEDIA QUERY OVERRIDE */
+    @media (min-width: 769px) {
+      body {
+        background-image: var(--bg-desktop);
+      }
     }
 
     /* Transparent Wrapper (No Card / No Background Frame) */
@@ -57,6 +67,7 @@
       font-weight: 500;
     }
     .branding-header h1 {
+      font-family: 'Montserrat', sans-serif;
       font-size: 2rem;
       color: var(--text-dark);
       margin: 0;
@@ -87,6 +98,7 @@
       margin-bottom: 25px;
       cursor: pointer;
       font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
     }
 
     /* Menu Selection items */
@@ -110,6 +122,7 @@
       box-shadow: 0 4px 15px rgba(65, 64, 64, 0.03);
       backdrop-filter: blur(4px);
       transition: all 0.2s ease;
+      font-family: 'Montserrat', sans-serif;
     }
     .menu-card:hover {
       background: rgba(247, 205, 241, 0.95);
@@ -169,15 +182,17 @@
       font-weight: 700; 
       font-size: 0.9rem; 
       white-space: nowrap;
+      font-family: 'Montserrat', sans-serif;
     }
     .meta-grid span, .meta-grid a {
       color: var(--text-light);
-      font-weight: 200;
+      font-weight: 400;
+      font-family: 'Montserrat', sans-serif;
     }
     .meta-grid a { 
       color: var(--primary-gold-dark); 
       text-decoration: underline; 
-      font-weight: 200; 
+      font-weight: 600; 
     }
     
     /* Inline Image Preview Styling */
@@ -201,6 +216,7 @@
       cursor: pointer;
       margin: 15px 0;
       font-weight: 500;
+      font-family: 'Montserrat', sans-serif;
     }
     input[type="checkbox"] {
       width: 20px;
@@ -236,7 +252,7 @@
       border-bottom: 1px dashed rgba(0,0,0,0.1);
     }
     .task-row:last-child { border-bottom: none; }
-    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; }
+    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'Montserrat', sans-serif; }
 
     /* Loading state design */
     .loading-container {
@@ -253,6 +269,9 @@
       margin: 0 auto 15px auto;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .loading-container span {
+      font-family: 'Montserrat', sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -288,7 +307,6 @@
 </div>
 
 <script>
-  // 🔽 PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL HERE 🔽
   const API_URL = "https://script.google.com/macros/s/AKfycby6gaZQWctKLZPMlcKMU9TEZw6vIZHcP6uBihkZxrH0n5wkfHT7jSdbvXXrvAsSaHVd/exec";
 
   let dbStore = { suppliers: [], checklist: [] };
@@ -315,7 +333,6 @@
     document.getElementById(viewId).classList.remove('hidden');
   }
 
-  // Hide/Unhide Function for Main Elements
   function toggleAccordion(id) {
     const el = document.getElementById(id);
     el.classList.contains('hidden') ? el.classList.remove('hidden') : el.classList.add('hidden');
@@ -340,7 +357,18 @@
               <div class="meta-item-row"><strong>Remaining Balance:</strong> <span>${sup.balance}</span></div>
               <div style="margin-top: 5px;">
                 <strong>Receipt Record:</strong>
-                ${sup.receipt ? `<img src="${sup.receipt}" class="receipt-preview-img" alt="Receipt Image Preview" onerror="this.style.display='none';">` : '<span style="color:var(--text-light); font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>'}
+                ${(() => {
+                  if (!sup.receipt) return '<span style="color:var(--text-light); font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>';
+                  
+                  let imgUrl = sup.receipt;
+                  if (imgUrl.includes('drive.google.com')) {
+                    const matches = imgUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
+                    if (matches && matches[1]) {
+                      imgUrl = `https://lh3.googleusercontent.com/d/${matches[1]}`;
+                    }
+                  }
+                  return `<img src="${imgUrl}" class="receipt-preview-img" alt="Receipt Image Preview" onerror="this.style.display='none';">`;
+                })()}
               </div>
             </div>
             <label class="checkbox-container">
