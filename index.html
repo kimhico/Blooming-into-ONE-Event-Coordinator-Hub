@@ -11,9 +11,9 @@
 
   <style>
     :root {
-      /* 🔽 BACKGROUND IMAGE CONFIGURATION 🔽 */
-      --bg-desktop: url('background-checklist.gif');
-      --bg-mobile: url('background-checklist-mobile.gif');
+      /* 🔽 BACKGROUND IMAGE CONFIGURATION (.jpg) 🔽 */
+      --bg-desktop: url('background-checklist.jpg');
+      --bg-mobile: url('background-checklist-mobile.jpg');
       
       --primary-gold: #fe78f3;
       --primary-gold-dark: #b32e8f;
@@ -22,10 +22,11 @@
       --accent-pink: #fbc2eb;
     }
 
-    /* 📱 MOBILE FIRST: Apply static, non-stretching background here */
+    /* 📱 MOBILE FIRST RULES */
     html {
-      background: var(--bg-mobile) no-repeat center top fixed;
-      background-size: cover;
+      /* Fixes mobile stretching: locks background aspect ratio to viewport width */
+      background: #ffffff var(--bg-mobile) no-repeat center top fixed;
+      background-size: 100% auto;
       min-height: 100vh;
     }
 
@@ -38,16 +39,17 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      background: transparent; /* Keep body transparent so html background shows */
+      background: transparent;
     }
 
     /* 🖥️ DESKTOP MEDIA QUERY OVERRIDE */
     @media (min-width: 769px) {
       html {
         background-image: var(--bg-desktop);
+        background-size: cover;
         background-position: center center;
       }
-      /* Show the text header branding only on desktop windows */
+      /* Show text header branding only on desktop windows */
       .branding-header h1 {
         display: block !important;
       }
@@ -66,12 +68,12 @@
     /* Header Branding Area Custom Adjustments */
     .branding-header {
       text-align: center;
-      /* Adds spacing on mobile so components drop below your graphic banner */
-      margin-top: 140px; 
+      /* Generates room on mobile views so content safely sits below the banner artwork */
+      margin-top: clamp(100px, 28vw, 150px); 
       margin-bottom: 30px;
     }
     
-    /* 📱 MOBILE FIRST: Hide text header lines so they don't crash into the graphic banner */
+    /* 📱 MOBILE FIRST: Hide standard text branding layout so it won't crash into graphics */
     .branding-header h1 {
       display: none; 
       font-family: 'Montserrat', sans-serif;
@@ -139,8 +141,8 @@
 
     /* Accordion Structures */
     .accordion-item {
-      background: rgba(250, 254, 191, 0.85);
-      border: 1px solid rgba(180, 179, 179, 0.5);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(180, 179, 179, 0.3);
       border-radius: 18px;
       margin-bottom: 12px;
       overflow: hidden;
@@ -162,7 +164,7 @@
       justify-content: space-between;
       align-items: center;
     }
-    .accordion-trigger:hover { background: rgba(255, 111, 0, 0.4); }
+    .accordion-trigger:hover { background: rgba(254, 120, 243, 0.05); }
     .accordion-content {
       padding: 20px;
       background: rgba(255, 255, 255, 0.9);
@@ -357,7 +359,7 @@
         if (imgUrl.includes('drive.google.com')) {
           const matches = imgUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
           if (matches && matches[1]) {
-            imgUrl = `https://lh3.googleusercontent.com/d/${matches[1]}`;
+            imgUrl = `https://docs.google.com/uc?export=view&id=${matches[1]}`;
           }
         }
         imgHtmlBlock = `<img src="${imgUrl}" class="receipt-preview-img" alt="Receipt Image Preview" onerror="this.style.display='none';">`;
@@ -372,7 +374,7 @@
           <div id="${panelId}" class="accordion-content hidden">
             <div class="meta-grid">
               <div class="meta-item-row"><strong>Item Supplied:</strong> <span>${sup.item}</span></div>
-              <div class="meta-item-row"><strong>Facebook Profile:</strong> <a href="${sup.fbLink}" target="_blank">${sup.name}</a></div>
+              <div class="meta-item-row"><strong>Facebook Profile:</strong> <a href="${sup.fbLink}" target="_blank">Open Link</a></div>
               <div class="meta-item-row"><strong>Downpayment Given:</strong> <span>${sup.downpayment}</span></div>
               <div class="meta-item-row"><strong>Remaining Balance:</strong> <span>${sup.balance}</span></div>
               <div style="margin-top: 5px;">
