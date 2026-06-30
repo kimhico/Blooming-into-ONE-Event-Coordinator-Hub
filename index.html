@@ -24,9 +24,10 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      /* Defaulting to Mobile Background */
-      background: var(--bg-mobile) no-repeat center center fixed;
-      background-size: cover;
+      /* Optimized for Mobile viewports to display side-borders perfectly */
+      background: var(--bg-mobile) no-repeat top center scroll;
+      background-size: 100% auto;
+      background-color: #ffffff;
       margin: 0;
       padding: 10px;
       min-height: 100vh;
@@ -40,6 +41,8 @@
     @media (min-width: 769px) {
       body {
         background-image: var(--bg-desktop);
+        background-attachment: fixed;
+        background-size: cover;
       }
     }
 
@@ -57,6 +60,7 @@
     .branding-header {
       text-align: center;
       margin-bottom: 40px;
+      margin-top: 60px; /* Gives space so text doesn't overlap the top header logo graphics */
     }
     .branding-header .sub-title {
       font-size: 0.8rem;
