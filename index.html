@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blooming into ONE - Event Coordinator Hub</title>
+  <title>Event Coordinator Hub</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,20 +22,30 @@
       --accent-pink: #fbc2eb;
     }
 
-    /* 📱 MOBILE FIRST RULES */
-    html {
-      /* Fixes mobile stretching: locks background aspect ratio to viewport width */
-      background: #ffffff var(--bg-mobile) no-repeat center top fixed;
-      background-size: 100% auto;
+    /* 📱 MOBILE FIRST LAYOUT */
+    html, body {
+      margin: 0;
+      padding: 0;
       min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-dark);
+    }
+
+    /* 🔒 FIXED LAYER PROTECTION: Prevents background stretching or distortion on scroll/expansion */
+    html::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: #ffffff var(--bg-mobile) no-repeat center top;
+      background-size: 100% auto; /* Ensures aspect ratio remains accurate */
+      pointer-events: none;
     }
 
     body {
-      font-family: 'Montserrat', sans-serif;
-      margin: 0;
-      padding: 10px;
-      min-height: 100vh;
-      color: var(--text-dark);
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -44,40 +54,41 @@
 
     /* 🖥️ DESKTOP MEDIA QUERY OVERRIDE */
     @media (min-width: 769px) {
-      html {
+      html::before {
         background-image: var(--bg-desktop);
         background-size: cover;
         background-position: center center;
       }
-      /* Show text header branding only on desktop windows */
+      /* Display text branding header only on wider desktop monitors */
       .branding-header h1 {
         display: block !important;
       }
     }
 
-    /* Transparent Wrapper (No Card / No Background Frame) */
+    /* Transparent Main Content Area Wrapper */
     .app-container {
       width: 100%;
       max-width: 450px;
-      margin: 20px auto;
-      padding: 20px 15px;
+      margin: 0 auto;
+      /* Padding keeps content safely inside the floral side-borders on narrow devices */
+      padding: 0 24px 40px 24px; 
       box-sizing: border-box;
       position: relative;
     }
 
-    /* Header Branding Area Custom Adjustments */
+    /* Header Branding Area Dynamic Constraints */
     .branding-header {
       text-align: center;
-      /* Generates room on mobile views so content safely sits below the banner artwork */
-      margin-top: clamp(100px, 28vw, 150px); 
-      margin-bottom: 30px;
+      /* Generates dynamic top-clearance for your graphics banner based on screen width */
+      margin-top: clamp(140px, 38vw, 190px); 
+      margin-bottom: 25px;
     }
     
-    /* 📱 MOBILE FIRST: Hide standard text branding layout so it won't crash into graphics */
+    /* 📱 MOBILE FIRST: Hide text header labels so they do not overlap your graphic artwork */
     .branding-header h1 {
       display: none; 
       font-family: 'Montserrat', sans-serif;
-      font-size: 2rem;
+      font-size: 1.8rem;
       color: var(--text-dark);
       margin: 0;
       line-height: 1.2;
@@ -86,7 +97,7 @@
     }
     .branding-header h1 span {
       display: block;
-      font-size: 2.6rem;
+      font-size: 2.4rem;
       color: var(--primary-gold-dark);
       letter-spacing: 2px;
       font-weight: 500;
@@ -107,31 +118,29 @@
       margin-bottom: 25px;
       cursor: pointer;
       font-weight: 600;
-      font-family: 'Montserrat', sans-serif;
     }
 
-    /* Menu Selection items */
+    /* Menu Selection Cards Layout */
     .menu-space {
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
     .menu-card {
-      background: rgba(255, 255, 255, 0.85); /* Semitransparent glass element */
-      border: 1px solid rgba(171, 164, 164, 0.45);
+      background: rgba(255, 255, 255, 0.9); /* Opaque background safety barrier */
+      border: 1px solid rgba(171, 164, 164, 0.4);
       padding: 22px;
       text-align: center;
       border-radius: 50px;
       cursor: pointer;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       letter-spacing: 1.5px;
       color: var(--text-dark);
       text-transform: uppercase;
-      box-shadow: 0 4px 15px rgba(65, 64, 64, 0.03);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
       backdrop-filter: blur(4px);
       transition: all 0.2s ease;
-      font-family: 'Montserrat', sans-serif;
     }
     .menu-card:hover {
       background: rgba(247, 205, 241, 0.95);
@@ -139,9 +148,9 @@
       transform: translateY(-2px);
     }
 
-    /* Accordion Structures */
+    /* Accordion Panels Component UI */
     .accordion-item {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid rgba(180, 179, 179, 0.3);
       border-radius: 18px;
       margin-bottom: 12px;
@@ -167,11 +176,11 @@
     .accordion-trigger:hover { background: rgba(254, 120, 243, 0.05); }
     .accordion-content {
       padding: 20px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.98);
       border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
 
-    /* Meta Display Data info layout */
+    /* Meta Details Layout Engine */
     .meta-grid {
       display: flex;
       flex-direction: column;
@@ -191,12 +200,10 @@
       font-weight: 700; 
       font-size: 0.9rem; 
       white-space: nowrap;
-      font-family: 'Montserrat', sans-serif;
     }
     .meta-grid span, .meta-grid a {
       color: var(--text-light);
       font-weight: 400;
-      font-family: 'Montserrat', sans-serif;
     }
     .meta-grid a { 
       color: var(--primary-gold-dark); 
@@ -204,18 +211,18 @@
       font-weight: 600; 
     }
     
-    /* Inline Image Preview Styling */
+    /* Document/Receipt Image Rendering Box */
     .receipt-preview-img {
       max-width: 100%;
       height: auto;
       border-radius: 12px;
       margin-top: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       border: 1px solid rgba(0,0,0,0.05);
       display: block;
     }
 
-    /* Input items elements */
+    /* Forms Inputs Elements layout */
     label.checkbox-container {
       display: flex;
       align-items: center;
@@ -225,7 +232,6 @@
       cursor: pointer;
       margin: 15px 0;
       font-weight: 500;
-      font-family: 'Montserrat', sans-serif;
     }
     input[type="checkbox"] {
       width: 20px;
@@ -240,7 +246,7 @@
       padding: 10px;
       border: 1px solid rgba(0,0,0,0.1);
       border-radius: 12px;
-      background: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.8);
       resize: none;
       font-family: 'Montserrat', sans-serif;
       font-size: 0.85rem;
@@ -252,7 +258,7 @@
       background: #ffffff;
     }
 
-    /* Checklist sub-items rows */
+    /* Sub-task checklist rows styling */
     .task-row {
       display: flex;
       flex-direction: column;
@@ -261,9 +267,9 @@
       border-bottom: 1px dashed rgba(0,0,0,0.1);
     }
     .task-row:last-child { border-bottom: none; }
-    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'Montserrat', sans-serif; }
+    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; }
 
-    /* Loading state design */
+    /* Loading Indicator UI Components */
     .loading-container {
       text-align: center;
       padding: 40px 0;
@@ -278,9 +284,6 @@
       margin: 0 auto 15px auto;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .loading-container span {
-      font-family: 'Montserrat', sans-serif;
-    }
   </style>
 </head>
 <body>
@@ -340,6 +343,8 @@
   function switchView(viewId) {
     ['view-home', 'view-suppliers', 'view-checklist'].forEach(id => document.getElementById(id).classList.add('hidden'));
     document.getElementById(viewId).classList.remove('hidden');
+    // Instantly scrolls back to top when switching panels so view frame is uniform
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function toggleAccordion(id) {
