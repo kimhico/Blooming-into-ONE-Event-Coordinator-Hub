@@ -22,11 +22,15 @@
       --accent-pink: #fbc2eb;
     }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      /* Fixed mobile scaling context rules to prevent overlapping */
+    /* 📱 MOBILE FIRST: Apply static, non-stretching background here */
+    html {
       background: var(--bg-mobile) no-repeat center top fixed;
       background-size: cover;
+      min-height: 100vh;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
       margin: 0;
       padding: 10px;
       min-height: 100vh;
@@ -34,13 +38,18 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      background: transparent; /* Keep body transparent so html background shows */
     }
 
     /* 🖥️ DESKTOP MEDIA QUERY OVERRIDE */
     @media (min-width: 769px) {
-      body {
+      html {
         background-image: var(--bg-desktop);
         background-position: center center;
+      }
+      /* Show the text header branding only on desktop windows */
+      .branding-header h1 {
+        display: block !important;
       }
     }
 
@@ -54,20 +63,17 @@
       position: relative;
     }
 
-    /* Header Branding Area */
+    /* Header Branding Area Custom Adjustments */
     .branding-header {
       text-align: center;
-      margin-bottom: 40px;
+      /* Adds spacing on mobile so components drop below your graphic banner */
+      margin-top: 140px; 
+      margin-bottom: 30px;
     }
-    .branding-header .sub-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--text-light);
-      margin: 0 0 5px 0;
-      font-weight: 500;
-    }
+    
+    /* 📱 MOBILE FIRST: Hide text header lines so they don't crash into the graphic banner */
     .branding-header h1 {
+      display: none; 
       font-family: 'Montserrat', sans-serif;
       font-size: 2rem;
       color: var(--text-dark);
@@ -345,7 +351,6 @@
     dbStore.suppliers.forEach(sup => {
       const panelId = `sup-panel-${sup.rowId}`;
       
-      // Handle Image Conversion Logic smoothly
       let imgHtmlBlock = '<span style="color:var(--text-light); font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>';
       if (sup.receipt) {
         let imgUrl = sup.receipt;
