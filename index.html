@@ -18,12 +18,12 @@
     html, body {
       margin: 0;
       padding: 0;
-      min-height: 100vh;
+      height: 100%;
       width: 100%;
+      overflow: hidden; /* Prevents the main screen body from stretching or bouncing */
     }
 
     body {
-      padding: 10px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -36,39 +36,15 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 100vh;
+      height: 100%;
       z-index: -1;
       pointer-events: none; 
       
       /* 🖥️ DESKTOP PRESETS (Completely Unchanged) */
-      background-image: url('background-checklist.jpg'); 
+      background-image: url('background-checklist.gif'); 
       background-size: cover;           
       background-position: center center; 
       background-repeat: no-repeat;
-    }
-
-    /* 📱 MOBILE ONLY OVERRIDE OVERLAY */
-    @media (max-width: 768px) {
-      .app-bg-viewport-lock {
-        background-image: url('background-checklist-mobile.jpg'); 
-        background-position: top center;
-        /* Forces the background to lock strictly to the device viewport dimensions without scaling on scroll */
-        background-size: 100% 100%; 
-        background-repeat: no-repeat;
-        height: 100vh;
-      }
-      
-      /* Seamlessly hides the text headers so only the image banner shows */
-      .branding-header {
-        display: none !important;
-      }
-
-      .app-container {
-        /* Pushes code completely below the embedded image banner graphic safely */
-        margin-top: 190px !important; 
-        margin-bottom: 40px !important;
-        padding: 0 15px !important;
-      }
     }
 
     /* Standard Desktop App Container Layout Frame */
@@ -77,8 +53,43 @@
       z-index: 2; 
       width: 100%;
       max-width: 450px;
-      margin: 40px auto 40px auto; 
+      margin: 40px auto; 
       padding: 20px 15px;
+    }
+
+    /* 📱 MOBILE ONLY OVERRIDE OVERLAY */
+    @media (max-width: 768px) {
+      .app-bg-viewport-lock {
+        background-image: url('background-checklist-mobile.gif'); 
+        background-position: top center;
+        background-size: 100% 100%; 
+        background-repeat: no-repeat;
+        height: 100%;
+      }
+      
+      /* 1. Hides the "Event Coordinator Hub" text overlapping your banner */
+      .branding-header {
+        display: none !important;
+      }
+
+      /* 2. Locks the program exactly inside your target purple canvas window zone */
+      .app-container {
+        position: absolute !important;
+        /* Aligns to the inner canvas box margins */
+        top: 13.5%; 
+        bottom: 4%;
+        left: 8%;
+        right: 8%;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 15px 5px !important;
+        
+        /* Enables scrolling exclusively INSIDE the purple field box */
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+      }
     }
 
     /* Header Branding Area */
@@ -126,7 +137,7 @@
       gap: 15px;
     }
     .menu-card {
-      background: rgba(255, 255, 255, 0.85); 
+      background: rgba(255, 255, 255, 0.9); 
       border: 1px solid rgba(171, 164, 164, 0.45);
       padding: 22px;
       text-align: center;
@@ -149,7 +160,7 @@
 
     /* Accordion Structures */
     .accordion-item {
-      background: rgba(255, 255, 255, 0.85); /* Reverted to your clean original view rules */
+      background: rgba(255, 255, 255, 0.9); 
       border: 1px solid rgba(180, 179, 179, 0.4);
       border-radius: 18px;
       margin-bottom: 12px;
@@ -174,7 +185,7 @@
     .accordion-trigger:hover { background: rgba(0, 0, 0, 0.02); } 
     .accordion-content {
       padding: 20px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
 
