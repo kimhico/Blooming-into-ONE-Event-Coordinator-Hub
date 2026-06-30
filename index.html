@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event Coordinator Hub</title>
+  <title>Blooming into ONE - Event Coordinator Hub</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,9 +11,9 @@
 
   <style>
     :root {
-      /* 🔽 BACKGROUND IMAGE CONFIGURATION (.jpg) 🔽 */
-      --bg-desktop: url('background-checklist.jpg');
-      --bg-mobile: url('background-checklist-mobile.jpg');
+      /* 🔽 BACKGROUND IMAGE CONFIGURATION 🔽 */
+      --bg-desktop: url('background-checklist.gif');
+      --bg-mobile: url('background-checklist-mobile.gif');
       
       --primary-gold: #fe78f3;
       --primary-gold-dark: #b32e8f;
@@ -22,73 +22,53 @@
       --accent-pink: #fbc2eb;
     }
 
-    /* 📱 MOBILE FIRST LAYOUT */
-    html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      font-family: 'Montserrat', sans-serif;
-      color: var(--text-dark);
-    }
-
-    /* 🔒 FIXED LAYER PROTECTION: Prevents background stretching or distortion on scroll/expansion */
-    html::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: #ffffff var(--bg-mobile) no-repeat center top;
-      background-size: 100% auto; /* Ensures aspect ratio remains accurate */
-      pointer-events: none;
-    }
-
     body {
+      font-family: 'Montserrat', sans-serif;
+      /* Defaulting to Mobile Background */
+      background: var(--bg-mobile) no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 10px;
+      min-height: 100vh;
+      color: var(--text-dark);
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      background: transparent;
     }
 
     /* 🖥️ DESKTOP MEDIA QUERY OVERRIDE */
     @media (min-width: 769px) {
-      html::before {
+      body {
         background-image: var(--bg-desktop);
-        background-size: cover;
-        background-position: center center;
-      }
-      /* Display text branding header only on wider desktop monitors */
-      .branding-header h1 {
-        display: block !important;
       }
     }
 
-    /* Transparent Main Content Area Wrapper */
+    /* Transparent Wrapper (No Card / No Background Frame) */
     .app-container {
       width: 100%;
       max-width: 450px;
-      margin: 0 auto;
-      /* Padding keeps content safely inside the floral side-borders on narrow devices */
-      padding: 0 24px 40px 24px; 
+      margin: 20px auto;
+      padding: 20px 15px;
       box-sizing: border-box;
       position: relative;
     }
 
-    /* Header Branding Area Dynamic Constraints */
+    /* Header Branding Area */
     .branding-header {
       text-align: center;
-      /* Generates dynamic top-clearance for your graphics banner based on screen width */
-      margin-top: clamp(140px, 38vw, 190px); 
-      margin-bottom: 25px;
+      margin-bottom: 40px;
     }
-    
-    /* 📱 MOBILE FIRST: Hide text header labels so they do not overlap your graphic artwork */
+    .branding-header .sub-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--text-light);
+      margin: 0 0 5px 0;
+      font-weight: 500;
+    }
     .branding-header h1 {
-      display: none; 
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: var(--text-dark);
       margin: 0;
       line-height: 1.2;
@@ -97,7 +77,7 @@
     }
     .branding-header h1 span {
       display: block;
-      font-size: 2.4rem;
+      font-size: 2.6rem;
       color: var(--primary-gold-dark);
       letter-spacing: 2px;
       font-weight: 500;
@@ -118,29 +98,31 @@
       margin-bottom: 25px;
       cursor: pointer;
       font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
     }
 
-    /* Menu Selection Cards Layout */
+    /* Menu Selection items */
     .menu-space {
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
     .menu-card {
-      background: rgba(255, 255, 255, 0.9); /* Opaque background safety barrier */
-      border: 1px solid rgba(171, 164, 164, 0.4);
+      background: rgba(255, 255, 255, 0.85); /* Semitransparent glass element */
+      border: 1px solid rgba(171, 164, 164, 0.45);
       padding: 22px;
       text-align: center;
       border-radius: 50px;
       cursor: pointer;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 1rem;
       letter-spacing: 1.5px;
       color: var(--text-dark);
       text-transform: uppercase;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 4px 15px rgba(65, 64, 64, 0.03);
       backdrop-filter: blur(4px);
       transition: all 0.2s ease;
+      font-family: 'Montserrat', sans-serif;
     }
     .menu-card:hover {
       background: rgba(247, 205, 241, 0.95);
@@ -148,10 +130,10 @@
       transform: translateY(-2px);
     }
 
-    /* Accordion Panels Component UI */
+    /* Accordion Structures */
     .accordion-item {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(180, 179, 179, 0.3);
+      background: rgba(250, 254, 191, 0.85); /* Restored Preset Pastel Color */
+      border: 1px solid rgba(180, 179, 179, 0.5);
       border-radius: 18px;
       margin-bottom: 12px;
       overflow: hidden;
@@ -173,14 +155,14 @@
       justify-content: space-between;
       align-items: center;
     }
-    .accordion-trigger:hover { background: rgba(254, 120, 243, 0.05); }
+    .accordion-trigger:hover { background: rgba(255, 111, 0, 0.4); } /* Restored Hover Preset Color */
     .accordion-content {
       padding: 20px;
-      background: rgba(255, 255, 255, 0.98);
+      background: rgba(255, 255, 255, 0.9);
       border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
 
-    /* Meta Details Layout Engine */
+    /* Meta Display Data info layout */
     .meta-grid {
       display: flex;
       flex-direction: column;
@@ -200,10 +182,12 @@
       font-weight: 700; 
       font-size: 0.9rem; 
       white-space: nowrap;
+      font-family: 'Montserrat', sans-serif;
     }
     .meta-grid span, .meta-grid a {
       color: var(--text-light);
       font-weight: 400;
+      font-family: 'Montserrat', sans-serif;
     }
     .meta-grid a { 
       color: var(--primary-gold-dark); 
@@ -211,18 +195,18 @@
       font-weight: 600; 
     }
     
-    /* Document/Receipt Image Rendering Box */
+    /* Inline Image Preview Styling */
     .receipt-preview-img {
       max-width: 100%;
       height: auto;
       border-radius: 12px;
       margin-top: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
       border: 1px solid rgba(0,0,0,0.05);
       display: block;
     }
 
-    /* Forms Inputs Elements layout */
+    /* Input items elements */
     label.checkbox-container {
       display: flex;
       align-items: center;
@@ -232,6 +216,7 @@
       cursor: pointer;
       margin: 15px 0;
       font-weight: 500;
+      font-family: 'Montserrat', sans-serif;
     }
     input[type="checkbox"] {
       width: 20px;
@@ -246,7 +231,7 @@
       padding: 10px;
       border: 1px solid rgba(0,0,0,0.1);
       border-radius: 12px;
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.6);
       resize: none;
       font-family: 'Montserrat', sans-serif;
       font-size: 0.85rem;
@@ -258,7 +243,7 @@
       background: #ffffff;
     }
 
-    /* Sub-task checklist rows styling */
+    /* Checklist sub-items rows */
     .task-row {
       display: flex;
       flex-direction: column;
@@ -267,9 +252,9 @@
       border-bottom: 1px dashed rgba(0,0,0,0.1);
     }
     .task-row:last-child { border-bottom: none; }
-    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; }
+    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'Montserrat', sans-serif; }
 
-    /* Loading Indicator UI Components */
+    /* Loading state design */
     .loading-container {
       text-align: center;
       padding: 40px 0;
@@ -284,6 +269,9 @@
       margin: 0 auto 15px auto;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .loading-container span {
+      font-family: 'Montserrat', sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -343,8 +331,6 @@
   function switchView(viewId) {
     ['view-home', 'view-suppliers', 'view-checklist'].forEach(id => document.getElementById(id).classList.add('hidden'));
     document.getElementById(viewId).classList.remove('hidden');
-    // Instantly scrolls back to top when switching panels so view frame is uniform
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function toggleAccordion(id) {
@@ -357,19 +343,6 @@
     container.innerHTML = '';
     dbStore.suppliers.forEach(sup => {
       const panelId = `sup-panel-${sup.rowId}`;
-      
-      let imgHtmlBlock = '<span style="color:var(--text-light); font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>';
-      if (sup.receipt) {
-        let imgUrl = sup.receipt;
-        if (imgUrl.includes('drive.google.com')) {
-          const matches = imgUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
-          if (matches && matches[1]) {
-            imgUrl = `https://docs.google.com/uc?export=view&id=${matches[1]}`;
-          }
-        }
-        imgHtmlBlock = `<img src="${imgUrl}" class="receipt-preview-img" alt="Receipt Image Preview" onerror="this.style.display='none';">`;
-      }
-
       container.innerHTML += `
         <div class="accordion-item">
           <button class="accordion-trigger" onclick="toggleAccordion('${panelId}')">
@@ -379,12 +352,23 @@
           <div id="${panelId}" class="accordion-content hidden">
             <div class="meta-grid">
               <div class="meta-item-row"><strong>Item Supplied:</strong> <span>${sup.item}</span></div>
-              <div class="meta-item-row"><strong>Facebook Profile:</strong> <a href="${sup.fbLink}" target="_blank">Open Link</a></div>
+              <div class="meta-item-row"><strong>Facebook Profile:</strong> <a href="${sup.fbLink}" target="_blank">${sup.name}</a></div>
               <div class="meta-item-row"><strong>Downpayment Given:</strong> <span>${sup.downpayment}</span></div>
               <div class="meta-item-row"><strong>Remaining Balance:</strong> <span>${sup.balance}</span></div>
               <div style="margin-top: 5px;">
                 <strong>Receipt Record:</strong>
-                ${imgHtmlBlock}
+                ${(() => {
+                  if (!sup.receipt) return '<span style="color:var(--text-light); font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>';
+                  
+                  let imgUrl = sup.receipt;
+                  if (imgUrl.includes('drive.google.com')) {
+                    const matches = imgUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
+                    if (matches && matches[1]) {
+                      imgUrl = `https://lh3.googleusercontent.com/d/${matches[1]}`;
+                    }
+                  }
+                  return `<img src="${imgUrl}" class="receipt-preview-img" alt="Receipt Image Preview" onerror="this.style.display='none';">`;
+                })()}
               </div>
             </div>
             <label class="checkbox-container">
