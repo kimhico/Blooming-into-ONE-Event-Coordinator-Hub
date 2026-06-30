@@ -15,7 +15,7 @@
       box-sizing: border-box;
     }
 
-    /* 🖥️ DESKTOP STYLES (Fully Scrollable, Pristine) */
+    /* 🖥️ DESKTOP STYLES */
     html, body {
       margin: 0;
       padding: 0;
@@ -60,10 +60,18 @@
       text-align: center;
     }
 
+    /* Desktop Navigation Top Placement Layouts */
+    .nav-container-top {
+      display: block;
+    }
+    .nav-container-bottom {
+      display: none;
+    }
+
     /* 📱 MOBILE OVERRIDES (Isolated Constraints) */
     @media (max-width: 768px) {
       html, body {
-        overflow: hidden; /* Only locks mobile body to allow inner scrolling */
+        overflow: hidden; 
         height: 100%;
       }
 
@@ -75,7 +83,6 @@
         height: 100%;
       }
       
-      /* Hides HTML header so only your graphic banner is visible */
       .branding-header {
         display: none !important;
       }
@@ -95,12 +102,22 @@
         overflow-x: hidden !important;
         -webkit-overflow-scrolling: touch;
       }
+
+      /* Swaps Back option placement for cleaner mobile spacing view */
+      .nav-container-top {
+        display: none !important;
+      }
+      .nav-container-bottom {
+        display: block !important;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
     }
 
     /* ✨ THEME PRESET BUTTONS & TYPOGRAPHY STYLESETS */
     h2, h3 { 
       font-weight: 400;
-      color: #c842a4; 
+      color: #f36812; 
       margin-top: 0px;
       letter-spacing: -0.5px;
     }
@@ -122,7 +139,7 @@
     .btn-action {
       width: 100%;
       padding: 15px;
-      color: white;
+      color: rgb(243, 255, 177);
       background-color: #608fbe;
       border: none;
       border-radius: 30px;
@@ -140,7 +157,7 @@
     .btn-selection {
       width: 100%;
       padding: 16px;
-      background: #ffffff;
+      background: #f7eeab;
       color: #333;
       border: 1px solid #ebd399;
       border-radius: 30px;
@@ -153,11 +170,11 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .btn-selection:hover { background: #fffdf6; border-color: #b08400; color: #b08400; }
+    .btn-selection:hover { background: #fff8de; border-color: #b08400; color: #b08400; }
 
     /* Accordion Panels */
     .accordion-item {
-      background: #ffffff;
+      background: #f7eeab;
       border: 1px solid #ebd399;
       border-radius: 20px;
       margin-bottom: 12px;
@@ -173,13 +190,13 @@
       text-align: left;
       font-size: 0.95rem;
       font-weight: 600;
-      color: #333333;
+      color: #3d3e3f;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .accordion-trigger:hover { background: #fffdf6; }
+    .accordion-trigger:hover { background: #fff8de; }
     .accordion-content {
       padding: 20px;
       background: #ffffff;
@@ -195,8 +212,8 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      margin-top: 10px;
+      margin-bottom: 25px;
       cursor: pointer;
       display: inline-block;
     }
@@ -220,7 +237,7 @@
     .meta-item:last-child { border-bottom: none; }
     .meta-label { font-weight: 700; color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
     .meta-value { font-weight: 600; color: #333; text-align: right; }
-    .meta-value a { color: #b08400; text-decoration: underline; }
+    .meta-value a { color: #b08400; text-decoration: underline; font-weight: 600; }
 
     /* Forms & Action Modals */
     .receipt-preview-img {
@@ -303,15 +320,25 @@
   </div>
 
   <div id="view-suppliers" class="hidden">
+    <div class="nav-container-top">
+      <button class="btn-text-back" onclick="switchView('view-home')">← Back to Search Menu</button>
+    </div>
     <h3>SUPPLIER PROFILES</h3>
     <div id="suppliers-container"></div>
-    <button class="btn-text-back" onclick="switchView('view-home')">← Back to Menu</button>
+    <div class="nav-container-bottom">
+      <button class="btn-text-back" onclick="switchView('view-home')">← Back to Search Menu</button>
+    </div>
   </div>
 
   <div id="view-checklist" class="hidden">
+    <div class="nav-container-top">
+      <button class="btn-text-back" onclick="switchView('view-home')">← Back to Search Menu</button>
+    </div>
     <h3>OVERALL CHECKLIST</h3>
     <div id="checklist-container"></div>
-    <button class="btn-text-back" onclick="switchView('view-home')">← Back to Menu</button>
+    <div class="nav-container-bottom">
+      <button class="btn-text-back" onclick="switchView('view-home')">← Back to Search Menu</button>
+    </div>
   </div>
 
 </div>
@@ -362,9 +389,9 @@
           <div id="${panelId}" class="accordion-content hidden">
             <div class="meta-box">
               <div class="meta-item"><span class="meta-label">Item Supplied</span><span class="meta-value">${sup.item}</span></div>
-              <div class="meta-item"><span class="meta-label">Facebook Profile</span><span class="meta-value"><a href="${sup.fbLink}" target="_blank">View Profile</a></span></div>
+              <div class="meta-item"><span class="meta-label">Facebook Profile</span><span class="meta-value"><a href="${sup.fbLink}" target="_blank">${sup.name}</a></span></div>
               <div class="meta-item"><span class="meta-label">Downpayment Given</span><span class="meta-value">${sup.downpayment}</span></div>
-              <div class="meta-item"><span class="meta-label">Remaining Balance</span><span class="meta-value" style="color:#c842a4;">${sup.balance}</span></div>
+              <div class="meta-item"><span class="meta-label">Remaining Balance</span><span class="meta-value";">${sup.balance}</span></div>
               <div style="margin-top: 10px; text-align: left;">
                 <span class="meta-label" style="display:block; margin-bottom:5px;">Receipt Record:</span>
                 ${(() => {
