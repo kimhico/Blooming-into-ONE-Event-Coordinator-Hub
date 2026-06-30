@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -15,67 +15,74 @@
       box-sizing: border-box;
     }
 
+    /* 🖥️ DESKTOP STYLES (Fully Scrollable, Pristine) */
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      min-height: 100vh;
       width: 100%;
-      overflow: hidden; /* Prevents the main screen body from stretching or bouncing */
+      background: transparent !important;
     }
 
     body {
+      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      background-color: #ffffff;
     }
 
-    /* 🧱 VIEWPORT FIXED LOCK BACKGROUND CONTAINER */
+    /* Background Canvas */
     .app-bg-viewport-lock {
       position: fixed;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
-      pointer-events: none; 
-      
-      /* 🖥️ DESKTOP PRESETS (Completely Unchanged) */
-      background-image: url('background-checklist.gif'); 
+      background-image: url('./background-checklist.gif'); 
       background-size: cover;           
       background-position: center center; 
       background-repeat: no-repeat;
+      pointer-events: none; 
     }
 
-    /* Standard Desktop App Container Layout Frame */
+    /* Central Content Frame */
     .app-container {
       position: relative;
-      z-index: 2; 
+      z-index: 2;
+      max-width: 450px; 
       width: 100%;
-      max-width: 450px;
-      margin: 40px auto; 
-      padding: 20px 15px;
+      margin: 100px auto 40px auto; 
+      background: transparent; 
+      padding: 35px 25px; 
+      text-align: center;
     }
 
-    /* 📱 MOBILE ONLY OVERRIDE OVERLAY */
+    /* 📱 MOBILE OVERRIDES (Isolated Constraints) */
     @media (max-width: 768px) {
+      html, body {
+        overflow: hidden; /* Only locks mobile body to allow inner scrolling */
+        height: 100%;
+      }
+
       .app-bg-viewport-lock {
-        background-image: url('background-checklist-mobile.gif'); 
+        background-image: url('./background-checklist-mobile.jpg'); 
         background-position: top center;
         background-size: 100% 100%; 
         background-repeat: no-repeat;
         height: 100%;
       }
       
-      /* 1. Hides the "Event Coordinator Hub" text overlapping your banner */
+      /* Hides HTML header so only your graphic banner is visible */
       .branding-header {
         display: none !important;
       }
 
-      /* 2. Locks the program exactly inside your target purple canvas window zone */
+      /* Binds code execution inside the exact boundaries of your background canvas window */
       .app-container {
         position: absolute !important;
-        /* Aligns to the inner canvas box margins */
         top: 13.5%; 
         bottom: 4%;
         left: 8%;
@@ -84,143 +91,138 @@
         max-width: none !important;
         margin: 0 !important;
         padding: 15px 5px !important;
-        
-        /* Enables scrolling exclusively INSIDE the purple field box */
         overflow-y: auto !important;
         overflow-x: hidden !important;
         -webkit-overflow-scrolling: touch;
       }
     }
 
-    /* Header Branding Area */
-    .branding-header {
-      text-align: center;
-      margin-bottom: 40px;
+    /* ✨ THEME PRESET BUTTONS & TYPOGRAPHY STYLESETS */
+    h2, h3 { 
+      font-weight: 400;
+      color: #c842a4; 
+      margin-top: 0px;
+      letter-spacing: -0.5px;
     }
+
     .branding-header h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
       color: #333333;
       margin: 0;
-      line-height: 1.2;
       font-weight: 500;
-      letter-spacing: 1px;
     }
     .branding-header h1 span {
       display: block;
-      font-size: 2.6rem;
-      color: #b32e8f; 
-      letter-spacing: 2px;
-      font-weight: 500;
-    }
-
-    /* Utilities & Navigation Links */
-    .hidden { display: none !important; }
-
-    .back-link {
-      display: inline-block;
-      text-align: center;
-      width: 100%;
-      color: #666666;
-      text-decoration: none;
-      font-size: 0.85rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 25px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* Menu Selection items */
-    .menu-space {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .menu-card {
-      background: rgba(255, 255, 255, 0.9); 
-      border: 1px solid rgba(171, 164, 164, 0.45);
-      padding: 22px;
-      text-align: center;
-      border-radius: 50px;
-      cursor: pointer;
+      font-size: 2.4rem;
+      color: #c842a4; 
       font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 1.5px;
-      color: #333333;
-      text-transform: uppercase;
-      box-shadow: 0 4px 15px rgba(65, 64, 64, 0.03);
-      backdrop-filter: blur(4px);
-      transition: all 0.2s ease;
-    }
-    .menu-card:hover {
-      background: rgba(247, 205, 241, 0.95);
-      border-color: #fe78f3;
-      transform: translateY(-2px);
     }
 
-    /* Accordion Structures */
+    /* Blueprint Blue Menu/Action Buttons */
+    .btn-action {
+      width: 100%;
+      padding: 15px;
+      color: white;
+      background-color: #608fbe;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .btn-action:hover { background-color: #466789; transform: translateY(-1px); }
+
+    /* Amber / Gold Selection Containers */
+    .btn-selection {
+      width: 100%;
+      padding: 16px;
+      background: #ffffff;
+      color: #333;
+      border: 1px solid #ebd399;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 6px rgba(176,132,0,0.06);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .btn-selection:hover { background: #fffdf6; border-color: #b08400; color: #b08400; }
+
+    /* Accordion Panels */
     .accordion-item {
-      background: rgba(255, 255, 255, 0.9); 
-      border: 1px solid rgba(180, 179, 179, 0.4);
-      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid #ebd399;
+      border-radius: 20px;
       margin-bottom: 12px;
       overflow: hidden;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 6px rgba(176,132,0,0.04);
+      text-align: left;
     }
     .accordion-trigger {
       width: 100%;
       background: none;
       border: none;
-      padding: 18px 20px;
+      padding: 16px 20px;
       text-align: left;
       font-size: 0.95rem;
-      font-weight: 700;
+      font-weight: 600;
       color: #333333;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .accordion-trigger:hover { background: rgba(0, 0, 0, 0.02); } 
+    .accordion-trigger:hover { background: #fffdf6; }
     .accordion-content {
       padding: 20px;
-      background: rgba(255, 255, 255, 0.95);
-      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      background: #ffffff;
+      border-top: 1px dashed rgba(176, 132, 0, 0.2);
     }
 
-    /* Meta Display Data info layout */
-    .meta-grid {
+    /* Back Controls */
+    .btn-text-back {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .btn-text-back:hover { color: #333; }
+
+    /* Metadata Records */
+    .meta-box {
       display: flex;
       flex-direction: column;
       gap: 12px;
       margin-bottom: 15px;
-      font-size: 0.9rem;
     }
-    .meta-item-row {
+    .meta-item {
       display: flex;
-      justify-content: flex-start;
-      align-items: baseline;
-      gap: 6px;
-      line-height: 1.4;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed rgba(176, 132, 0, 0.25);
+      font-size: 14px;
     }
-    .meta-grid strong { 
-      color: #333333; 
-      font-weight: 700; 
-      font-size: 0.9rem; 
-      white-space: nowrap;
-    }
-    .meta-grid span, .meta-grid a {
-      color: #666666;
-      font-weight: 400;
-    }
-    .meta-grid a { 
-      color: #b32e8f; 
-      text-decoration: underline; 
-      font-weight: 600; 
-    }
-    
-    /* Inline Image Preview Styling */
+    .meta-item:last-child { border-bottom: none; }
+    .meta-label { font-weight: 700; color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .meta-value { font-weight: 600; color: #333; text-align: right; }
+    .meta-value a { color: #b08400; text-decoration: underline; }
+
+    /* Forms & Action Modals */
     .receipt-preview-img {
       max-width: 100%;
       height: auto;
@@ -231,7 +233,6 @@
       display: block;
     }
 
-    /* Input items elements */
     label.checkbox-container {
       display: flex;
       align-items: center;
@@ -240,58 +241,45 @@
       color: #333333;
       cursor: pointer;
       margin: 15px 0;
-      font-weight: 500;
+      font-weight: 600;
     }
     input[type="checkbox"] {
       width: 20px;
       height: 20px;
-      accent-color: #b32e8f;
+      accent-color: #b08400;
       cursor: pointer;
     }
 
     textarea {
       width: 100%;
-      height: 45px;
-      padding: 10px;
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 12px;
-      background: rgba(255,255,255,0.6);
+      height: 50px;
+      padding: 10px 14px;
+      border: 1px solid #e0e0e0;
+      border-radius: 15px;
+      background: #fafafa;
       resize: none;
       font-size: 0.85rem;
       box-sizing: border-box;
+      font-weight: 500;
     }
     textarea:focus {
       outline: none;
-      border-color: #b32e8f;
+      border-color: #b08400;
       background: #ffffff;
     }
 
-    /* Checklist sub-items rows */
     .task-row {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      padding: 12px 0;
-      border-bottom: 1px dashed rgba(0,0,0,0.1);
+      gap: 8px;
+      padding: 14px 0;
+      border-bottom: 1px dashed rgba(176, 132, 0, 0.2);
     }
     .task-row:last-child { border-bottom: none; }
-    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; }
+    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 600; color: #333; }
 
-    /* Loading state design */
-    .loading-container {
-      text-align: center;
-      padding: 40px 0;
-    }
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(0,0,0,0.05);
-      border-top: 3px solid #b32e8f;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 15px auto;
-    }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .hidden { display: none !important; }
+    .loader { color: #b08400; font-weight: 700; margin: 20px 0; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -304,26 +292,26 @@
     <h1>EVENT COORDINATOR<span>HUB</span></h1>
   </div>
 
-  <div id="loading" class="loading-container">
-    <div class="spinner"></div>
-    <span style="font-size: 0.85rem; color: #666666; letter-spacing: 1px; font-weight: 500;">Searching list...</span>
-  </div>
+  <div id="loading" class="loader">Loading coordinator Hub...</div>
 
   <div id="view-home" class="hidden">
-    <div class="menu-space">
-      <div class="menu-card" onclick="switchView('view-suppliers')">Supplier Profiles</div>
-      <div class="menu-card" onclick="switchView('view-checklist')">Overall Checklist</div>
+    <div style="margin-bottom: 25px;">
+      <h2>MANAGEMENT MENU</h2>
     </div>
+    <button class="btn-selection" onclick="switchView('view-suppliers')">Supplier Profiles</button>
+    <button class="btn-selection" onclick="switchView('view-checklist')">Overall Checklist</button>
   </div>
 
   <div id="view-suppliers" class="hidden">
-    <a class="back-link" onclick="switchView('view-home')">← Back to Search Menu</a>
+    <h3>SUPPLIER PROFILES</h3>
     <div id="suppliers-container"></div>
+    <button class="btn-text-back" onclick="switchView('view-home')">← Back to Menu</button>
   </div>
 
   <div id="view-checklist" class="hidden">
-    <a class="back-link" onclick="switchView('view-home')">← Back to Search Menu</a>
+    <h3>OVERALL CHECKLIST</h3>
     <div id="checklist-container"></div>
+    <button class="btn-text-back" onclick="switchView('view-home')">← Back to Menu</button>
   </div>
 
 </div>
@@ -368,19 +356,19 @@
       container.innerHTML += `
         <div class="accordion-item">
           <button class="accordion-trigger" onclick="toggleAccordion('${panelId}')">
-            <span>${sup.name}</span>
-            <span style="font-size:0.75rem; color:#b32e8f;">▼</span>
+            <span>• ${sup.name}</span>
+            <span style="font-size:0.75rem; color:#b08400;">▼</span>
           </button>
           <div id="${panelId}" class="accordion-content hidden">
-            <div class="meta-grid">
-              <div class="meta-item-row"><strong>Item Supplied:</strong> <span>${sup.item}</span></div>
-              <div class="meta-item-row"><strong>Facebook Profile:</strong> <a href="${sup.fbLink}" target="_blank">${sup.name}</a></div>
-              <div class="meta-item-row"><strong>Downpayment Given:</strong> <span>${sup.downpayment}</span></div>
-              <div class="meta-item-row"><strong>Remaining Balance:</strong> <span>${sup.balance}</span></div>
-              <div style="margin-top: 5px;">
-                <strong>Receipt Record:</strong>
+            <div class="meta-box">
+              <div class="meta-item"><span class="meta-label">Item Supplied</span><span class="meta-value">${sup.item}</span></div>
+              <div class="meta-item"><span class="meta-label">Facebook Profile</span><span class="meta-value"><a href="${sup.fbLink}" target="_blank">View Profile</a></span></div>
+              <div class="meta-item"><span class="meta-label">Downpayment Given</span><span class="meta-value">${sup.downpayment}</span></div>
+              <div class="meta-item"><span class="meta-label">Remaining Balance</span><span class="meta-value" style="color:#c842a4;">${sup.balance}</span></div>
+              <div style="margin-top: 10px; text-align: left;">
+                <span class="meta-label" style="display:block; margin-bottom:5px;">Receipt Record:</span>
                 ${(() => {
-                  if (!sup.receipt) return '<span style="color:#666666; font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>';
+                  if (!sup.receipt) return '<span style="color:#888; font-size:13px; font-style:italic;">No image on file</span>';
                   
                   let imgUrl = sup.receipt;
                   if (imgUrl.includes('drive.google.com')) {
@@ -389,7 +377,7 @@
                       imgUrl = `https://lh3.googleusercontent.com/d/${matches[1]}`;
                     }
                   }
-                  return `<img src="${imgUrl}" class="receipt-preview-img" alt="Receipt Image Preview" onerror="this.style.display='none';">`;
+                  return `<img src="${imgUrl}" class="receipt-preview-img" alt="Receipt Preview" onerror="this.style.display='none';">`;
                 })()}
               </div>
             </div>
@@ -419,8 +407,8 @@
       let blockHtml = `
         <div class="accordion-item">
           <button class="accordion-trigger" onclick="toggleAccordion('${panelId}')">
-            <span>${catName}</span>
-            <span style="font-size:0.75rem; color:#b32e8f;">▼</span>
+            <span>• ${catName}</span>
+            <span style="font-size:0.75rem; color:#b08400;">▼</span>
           </button>
           <div id="${panelId}" class="accordion-content hidden">`;
       
@@ -454,6 +442,11 @@
     debounceTimers[timerId] = setTimeout(() => {
       sendUpdate(type, rowId, col, val);
     }, 600);
+  }
+
+  function escapeHtml(str) {
+    if (!str) return "";
+    return str.replace(/'/g, "\\'").replace(/"/g, "&quot;");
   }
 </script>
 </body>
