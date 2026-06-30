@@ -24,8 +24,8 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      /* Defaulting to Mobile Background */
-      background: var(--bg-mobile) no-repeat center center fixed;
+      /* Fixed mobile scaling context rules to prevent overlapping */
+      background: var(--bg-mobile) no-repeat center top fixed;
       background-size: cover;
       margin: 0;
       padding: 10px;
@@ -40,6 +40,7 @@
     @media (min-width: 769px) {
       body {
         background-image: var(--bg-desktop);
+        background-position: center center;
       }
     }
 
@@ -343,6 +344,20 @@
     container.innerHTML = '';
     dbStore.suppliers.forEach(sup => {
       const panelId = `sup-panel-${sup.rowId}`;
+      
+      // Handle Image Conversion Logic smoothly
+      let imgHtmlBlock = '<span style="color:var(--text-light); font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>';
+      if (sup.receipt) {
+        let imgUrl = sup.receipt;
+        if (imgUrl.includes('drive.google.com')) {
+          const matches = imgUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
+          if (matches && matches[1]) {
+            imgUrl = `https://lh3.googleusercontent.com/d/${matches[1]}`;
+          }
+        }
+        imgHtmlBlock = `<img src="${imgUrl}" class="receipt-preview-img" alt="Receipt Image Preview" onerror="this.style.display='none';">`;
+      }
+
       container.innerHTML += `
         <div class="accordion-item">
           <button class="accordion-trigger" onclick="toggleAccordion('${panelId}')">
@@ -357,18 +372,7 @@
               <div class="meta-item-row"><strong>Remaining Balance:</strong> <span>${sup.balance}</span></div>
               <div style="margin-top: 5px;">
                 <strong>Receipt Record:</strong>
-                ${(() => {
-                  if (!sup.receipt) return '<span style="color:var(--text-light); font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>';
-                  
-                  let imgUrl = sup.receipt;
-                  if (imgUrl.includes('drive.google.com')) {
-                    const matches = imgUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
-                    if (matches && matches[1]) {
-                      imgUrl = `https://lh3.googleusercontent.com/d/${matches[1]}`;
-                    }
-                  }
-                  return `<img src="${imgUrl}" class="receipt-preview-img" alt="Receipt Image Preview" onerror="this.style.display='none';">`;
-                })()}
+                ${imgHtmlBlock}
               </div>
             </div>
             <label class="checkbox-container">
