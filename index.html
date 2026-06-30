@@ -30,7 +30,7 @@
       background-color: #ffffff;
     }
 
-    /* 🧱 FIX: Ported exact background viewport-lock structure from your registry code */
+    /* 🧱 VIEWPORT FIXED LOCK BACKGROUND CONTAINER */
     .app-bg-viewport-lock {
       position: fixed;
       top: 0;
@@ -41,7 +41,7 @@
       height: 100%;
       z-index: -1;
       
-      /* 1. DEFAULT BACKGROUND (Laptops and Desktops) */
+      /* 🖥️ DESKTOP PRESETS (Unchanged) */
       background-image: url('background-checklist.gif'); 
       background-size: cover;           
       background-position: center center; 
@@ -49,22 +49,29 @@
       pointer-events: none; 
     }
 
-    /* 2. MOBILE BACKGROUND OVERRIDE (Phones and Tablets) */
+    /* 📱 MOBILE ONLY OVERRIDE OVERLAY */
     @media (max-width: 768px) {
       .app-bg-viewport-lock {
+        /* Changes only apply to screens below 768px width */
         background-image: url('background-checklist-mobile.gif'); 
         background-position: center center; 
         background-size: cover;
       }
+      
+      .app-container {
+        /* Matches the exact container spacing that aligned your registry app mobile elements */
+        margin: 100px auto 40px auto !important; 
+        padding: 35px 25px !important;
+      }
     }
 
-    /* Transparent Wrapper matching your layout framework style */
+    /* Standard Desktop App Container Layout Frame */
     .app-container {
       position: relative;
-      z-index: 2; /* Keeps text layered above background graphics securely */
+      z-index: 2; 
       width: 100%;
       max-width: 450px;
-      margin: 80px auto 40px auto; /* Centered offset gives header room to breathe */
+      margin: 40px auto 40px auto; 
       padding: 20px 15px;
     }
 
@@ -84,7 +91,7 @@
     .branding-header h1 span {
       display: block;
       font-size: 2.6rem;
-      color: #b32e8f; /* Preset dark magenta gold theme accent */
+      color: #b32e8f; 
       letter-spacing: 2px;
       font-weight: 500;
     }
@@ -113,7 +120,7 @@
       gap: 15px;
     }
     .menu-card {
-      background: rgba(255, 255, 255, 0.85); /* Semitransparent glass element */
+      background: rgba(255, 255, 255, 0.85); 
       border: 1px solid rgba(171, 164, 164, 0.45);
       padding: 22px;
       text-align: center;
@@ -136,7 +143,7 @@
 
     /* Accordion Structures */
     .accordion-item {
-      background: rgba(250, 254, 191, 0.85); /* Restored Preset Pastel Color */
+      background: rgba(250, 254, 191, 0.85); 
       border: 1px solid rgba(180, 179, 179, 0.5);
       border-radius: 18px;
       margin-bottom: 12px;
@@ -158,7 +165,7 @@
       justify-content: space-between;
       align-items: center;
     }
-    .accordion-trigger:hover { background: rgba(255, 111, 0, 0.4); } /* Restored Hover Preset Color */
+    .accordion-trigger:hover { background: rgba(255, 111, 0, 0.4); } 
     .accordion-content {
       padding: 20px;
       background: rgba(255, 255, 255, 0.9);
