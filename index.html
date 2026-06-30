@@ -42,7 +42,7 @@
       z-index: -1;
       
       /* 🖥️ DESKTOP PRESETS (Unchanged) */
-      background-image: url('background-checklist.gif'); 
+      background-image: url('background-checklist.jpg'); 
       background-size: cover;           
       background-position: center center; 
       background-repeat: no-repeat;
@@ -52,16 +52,20 @@
     /* 📱 MOBILE ONLY OVERRIDE OVERLAY */
     @media (max-width: 768px) {
       .app-bg-viewport-lock {
-        /* Changes only apply to screens below 768px width */
-        background-image: url('background-checklist-mobile.gif'); 
-        background-position: center center; 
+        background-image: url('background-checklist-mobile.jpg'); 
+        background-position: top center; /* Align to top to ensure banner stays locked at the top edge */
         background-size: cover;
       }
       
+      /* Hides the HTML text header because your image already contains it */
+      .branding-header {
+        display: none !important;
+      }
+
       .app-container {
-        /* Matches the exact container spacing that aligned your registry app mobile elements */
-        margin: 100px auto 40px auto !important; 
-        padding: 35px 25px !important;
+        /* This pushes the entire functional app area down past the image's embedded header graphics */
+        margin-top: 150px !important; 
+        padding: 10px 20px !important;
       }
     }
 
