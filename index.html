@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Blooming into ONE - Event Coordinator Hub</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,70 +10,72 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      /* 🔽 BACKGROUND IMAGE CONFIGURATION 🔽 */
-      --bg-desktop: url('background-checklist.gif');
-      --bg-mobile: url('background-checklist-mobile.gif');
-      
-      --primary-gold: #fe78f3;
-      --primary-gold-dark: #b32e8f;
-      --text-dark: #333333;
-      --text-light: #666666;
-      --accent-pink: #fbc2eb;
+    * {
+      font-family: 'Montserrat', sans-serif !important;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      width: 100%;
     }
 
     body {
-      font-family: 'Montserrat', sans-serif;
-      /* Optimized for Mobile viewports to display side-borders perfectly */
-      background: var(--bg-mobile) no-repeat top center scroll;
-      background-size: 100% auto;
-      background-color: #ffffff;
-      margin: 0;
       padding: 10px;
-      min-height: 100vh;
-      color: var(--text-dark);
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      background-color: #ffffff;
     }
 
-    /* 🖥️ DESKTOP MEDIA QUERY OVERRIDE */
-    @media (min-width: 769px) {
-      body {
-        background-image: var(--bg-desktop);
-        background-attachment: fixed;
+    /* 🧱 FIX: Ported exact background viewport-lock structure from your registry code */
+    .app-bg-viewport-lock {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      
+      /* 1. DEFAULT BACKGROUND (Laptops and Desktops) */
+      background-image: url('background-checklist.gif'); 
+      background-size: cover;           
+      background-position: center center; 
+      background-repeat: no-repeat;
+      pointer-events: none; 
+    }
+
+    /* 2. MOBILE BACKGROUND OVERRIDE (Phones and Tablets) */
+    @media (max-width: 768px) {
+      .app-bg-viewport-lock {
+        background-image: url('background-checklist-mobile.gif'); 
+        background-position: center center; 
         background-size: cover;
       }
     }
 
-    /* Transparent Wrapper (No Card / No Background Frame) */
+    /* Transparent Wrapper matching your layout framework style */
     .app-container {
+      position: relative;
+      z-index: 2; /* Keeps text layered above background graphics securely */
       width: 100%;
       max-width: 450px;
-      margin: 20px auto;
+      margin: 80px auto 40px auto; /* Centered offset gives header room to breathe */
       padding: 20px 15px;
-      box-sizing: border-box;
-      position: relative;
     }
 
     /* Header Branding Area */
     .branding-header {
       text-align: center;
       margin-bottom: 40px;
-      margin-top: 60px; /* Gives space so text doesn't overlap the top header logo graphics */
-    }
-    .branding-header .sub-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--text-light);
-      margin: 0 0 5px 0;
-      font-weight: 500;
     }
     .branding-header h1 {
-      font-family: 'Montserrat', sans-serif;
       font-size: 2rem;
-      color: var(--text-dark);
+      color: #333333;
       margin: 0;
       line-height: 1.2;
       font-weight: 500;
@@ -82,7 +84,7 @@
     .branding-header h1 span {
       display: block;
       font-size: 2.6rem;
-      color: var(--primary-gold-dark);
+      color: #b32e8f; /* Preset dark magenta gold theme accent */
       letter-spacing: 2px;
       font-weight: 500;
     }
@@ -94,7 +96,7 @@
       display: inline-block;
       text-align: center;
       width: 100%;
-      color: var(--text-light);
+      color: #666666;
       text-decoration: none;
       font-size: 0.85rem;
       letter-spacing: 1.5px;
@@ -102,7 +104,6 @@
       margin-bottom: 25px;
       cursor: pointer;
       font-weight: 600;
-      font-family: 'Montserrat', sans-serif;
     }
 
     /* Menu Selection items */
@@ -121,16 +122,15 @@
       font-weight: 700;
       font-size: 1rem;
       letter-spacing: 1.5px;
-      color: var(--text-dark);
+      color: #333333;
       text-transform: uppercase;
       box-shadow: 0 4px 15px rgba(65, 64, 64, 0.03);
       backdrop-filter: blur(4px);
       transition: all 0.2s ease;
-      font-family: 'Montserrat', sans-serif;
     }
     .menu-card:hover {
       background: rgba(247, 205, 241, 0.95);
-      border-color: var(--primary-gold);
+      border-color: #fe78f3;
       transform: translateY(-2px);
     }
 
@@ -150,10 +150,9 @@
       border: none;
       padding: 18px 20px;
       text-align: left;
-      font-family: 'Montserrat', sans-serif;
       font-size: 0.95rem;
       font-weight: 700;
-      color: var(--text-dark);
+      color: #333333;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
@@ -182,19 +181,17 @@
       line-height: 1.4;
     }
     .meta-grid strong { 
-      color: var(--text-dark); 
+      color: #333333; 
       font-weight: 700; 
       font-size: 0.9rem; 
       white-space: nowrap;
-      font-family: 'Montserrat', sans-serif;
     }
     .meta-grid span, .meta-grid a {
-      color: var(--text-light);
+      color: #666666;
       font-weight: 400;
-      font-family: 'Montserrat', sans-serif;
     }
     .meta-grid a { 
-      color: var(--primary-gold-dark); 
+      color: #b32e8f; 
       text-decoration: underline; 
       font-weight: 600; 
     }
@@ -216,16 +213,15 @@
       align-items: center;
       gap: 12px;
       font-size: 0.85rem;
-      color: var(--text-dark);
+      color: #333333;
       cursor: pointer;
       margin: 15px 0;
       font-weight: 500;
-      font-family: 'Montserrat', sans-serif;
     }
     input[type="checkbox"] {
       width: 20px;
       height: 20px;
-      accent-color: var(--primary-gold-dark);
+      accent-color: #b32e8f;
       cursor: pointer;
     }
 
@@ -237,13 +233,12 @@
       border-radius: 12px;
       background: rgba(255,255,255,0.6);
       resize: none;
-      font-family: 'Montserrat', sans-serif;
       font-size: 0.85rem;
       box-sizing: border-box;
     }
     textarea:focus {
       outline: none;
-      border-color: var(--primary-gold-dark);
+      border-color: #b32e8f;
       background: #ffffff;
     }
 
@@ -256,7 +251,7 @@
       border-bottom: 1px dashed rgba(0,0,0,0.1);
     }
     .task-row:last-child { border-bottom: none; }
-    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'Montserrat', sans-serif; }
+    .task-main-info { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; }
 
     /* Loading state design */
     .loading-container {
@@ -267,18 +262,17 @@
       width: 40px;
       height: 40px;
       border: 3px solid rgba(0,0,0,0.05);
-      border-top: 3px solid var(--primary-gold-dark);
+      border-top: 3px solid #b32e8f;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 0 auto 15px auto;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .loading-container span {
-      font-family: 'Montserrat', sans-serif;
-    }
   </style>
 </head>
 <body>
+
+<div class="app-bg-viewport-lock"></div>
 
 <div class="app-container">
   
@@ -288,7 +282,7 @@
 
   <div id="loading" class="loading-container">
     <div class="spinner"></div>
-    <span style="font-size: 0.85rem; color: var(--text-light); letter-spacing: 1px; font-weight: 500;">Searching list...</span>
+    <span style="font-size: 0.85rem; color: #666666; letter-spacing: 1px; font-weight: 500;">Searching list...</span>
   </div>
 
   <div id="view-home" class="hidden">
@@ -351,7 +345,7 @@
         <div class="accordion-item">
           <button class="accordion-trigger" onclick="toggleAccordion('${panelId}')">
             <span>${sup.name}</span>
-            <span style="font-size:0.75rem; color:var(--primary-gold-dark);">▼</span>
+            <span style="font-size:0.75rem; color:#b32e8f;">▼</span>
           </button>
           <div id="${panelId}" class="accordion-content hidden">
             <div class="meta-grid">
@@ -362,7 +356,7 @@
               <div style="margin-top: 5px;">
                 <strong>Receipt Record:</strong>
                 ${(() => {
-                  if (!sup.receipt) return '<span style="color:var(--text-light); font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>';
+                  if (!sup.receipt) return '<span style="color:#666666; font-size:0.85rem; font-style:italic; display:block; margin-top:4px;">No image on file</span>';
                   
                   let imgUrl = sup.receipt;
                   if (imgUrl.includes('drive.google.com')) {
@@ -402,7 +396,7 @@
         <div class="accordion-item">
           <button class="accordion-trigger" onclick="toggleAccordion('${panelId}')">
             <span>${catName}</span>
-            <span style="font-size:0.75rem; color:var(--primary-gold-dark);">▼</span>
+            <span style="font-size:0.75rem; color:#b32e8f;">▼</span>
           </button>
           <div id="${panelId}" class="accordion-content hidden">`;
       
